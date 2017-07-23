@@ -1,31 +1,49 @@
+
+/*	Copyright (C) 2017 IT-KiLLER
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include <sourcemod>
 #include <sdktools>
 #pragma semicolon 1
 #pragma newdecls required
 
-
 public Plugin myinfo =
 {
-	name = "[CS:GO] Alltalk",
+	name = "[CS:GO] Enforce Alltalk ",
 	author = "IT-KiLLER",
-	description = "Force alltalk in CS:GO",
-	version = "1.0",
-	url = "https://github.com/it-killer"
+	description = "This plugin make it impossible to change Alltalk in CS:GO.",
+	version = "1.1",
+	url = "https://github.com/IT-KiLLER"
 };
 
-public void OnPluginStart()
+public void OnMapStart()
 {
-	HookEvent("round_start", OnRoundStart, EventHookMode_PostNoCopy); 
+	enForcer("sm_deadtalk", 2.0);
+   	enForcer("sv_deadtalk");
+   	enForcer("sv_alltalk");
+   	enForcer("sv_full_alltalk");
+   	enForcer("sv_spec_hear");
+   	enForcer("sv_coaching_enabled");
+   	enForcer("sv_talk_enemy_dead");
+   	enForcer("sv_talk_enemy_living");
 }
 
-public void OnRoundStart(Handle event, char[] name, bool dontBroadcast)
+stock void enForcer(char[] strCvar, float value = 1.0)
 {
-   	SetConVarInt(FindConVar("sm_deadtalk"), 2, false, false);
-   	SetConVarInt(FindConVar("sv_deadtalk"), 1, false, false);
-   	SetConVarInt(FindConVar("sv_alltalk"), 1, false, false);
-	SetConVarInt(FindConVar("sv_full_alltalk"), 1, false, false);
-	SetConVarInt(FindConVar("sv_spec_hear"), 1, false, false);
-	SetConVarInt(FindConVar("sv_coaching_enabled"), 1, false, false);
-	SetConVarInt(FindConVar("sv_talk_enemy_dead"), 1, false, false);
-	SetConVarInt(FindConVar("sv_talk_enemy_living"), 1, false, false);
-}  
+	ConVar cvar = FindConVar(strCvar);
+	if(!cvar) return;
+	cvar.SetFloat(value, false, false);
+	cvar.SetBounds(ConVarBound_Upper, true, value);
+	cvar.SetBounds(ConVarBound_Lower, true, value);
+}
