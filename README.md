@@ -16,6 +16,7 @@ Locks the values on these cvars:
 - **1.2** - 2017-08-15
   - Deleted a cvar.
   - Changed execution from OnMapStart to OnAllPluginsLoaded.
+  - Added reset function to default at unload.
 - **1.1** - 2017-07-23
   - New plugin name.
   - New method!
