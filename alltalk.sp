@@ -23,18 +23,17 @@ public Plugin myinfo =
 	name = "[CS:GO] Enforce Alltalk ",
 	author = "IT-KiLLER",
 	description = "This plugin make it impossible to change Alltalk in CS:GO.",
-	version = "1.1",
+	version = "1.2",
 	url = "https://github.com/IT-KiLLER"
 };
 
-public void OnMapStart()
+public void OnAllPluginsLoaded()
 {
 	enForcer("sm_deadtalk", 2.0);
    	enForcer("sv_deadtalk");
    	enForcer("sv_alltalk");
    	enForcer("sv_full_alltalk");
    	enForcer("sv_spec_hear");
-   	enForcer("sv_coaching_enabled");
    	enForcer("sv_talk_enemy_dead");
    	enForcer("sv_talk_enemy_living");
 }
